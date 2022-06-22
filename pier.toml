@@ -93,7 +93,7 @@ command='''
 #!/bin/bash
 
 cd dist
-script -c setup.sh
+script -c setup.sh -f /dev/null
 cd -
 exit 0;
 '''
@@ -107,7 +107,7 @@ command='''
 #!/bin/bash
 
 cd dist
-script -c "./setup.sh -irc"
+script -c "./setup.sh -irc" -f /dev/null
 exit 0;
 '''
 description = "start cyphernode"
@@ -133,7 +133,9 @@ alias='test'
 command='''
 #!/bin/bash
 
-./dist/testdeployment.sh
+cd dist
+script -c ./testdeployment.sh -f /dev/null
+cd -
 exit 0;
 '''
 description = "test cyphernode"
