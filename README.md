@@ -63,13 +63,6 @@ exit 0;
 description = "print cyphernode version"
 tags = ['cn']
 ```
-## Known bugs
-
-The stop and start are a bit buggy. They work but you just wont see any output until the script is done.
-
-pier currently is unable to properly pipe the output log from start.sh and stop.sh, so these two are better off run manually.
-
-
 
 
 
