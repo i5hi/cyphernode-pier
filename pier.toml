@@ -1,0 +1,137 @@
+[scripts.version]
+alias='v'
+command='''
+#/bin/bash
+
+head -10 build.sh | grep CYPHERNODE | grep -oP '".*"' 
+exit 0;
+'''
+description = "print cyphernode version"
+tags = ['cn']
+
+[scripts.build]
+alias='b'
+command='''
+#/bin/bash
+
+printf "***********************************************************************\n"
+echo "You are about to run this script:\n" 
+printf "***********************************************************************\n"
+cat build.sh
+printf "***********************************************************************\n"
+echo "You are about to run this script. Okay?" 
+printf "***********************************************************************\n"
+read -r REPLY
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1;
+else
+    ./build.sh
+fi
+exit 0;
+'''
+description = "build All Docker Images"
+tags = ['cn']
+
+
+[scripts.proxy-logs]
+alias='pxlogs'
+command='''
+#!/bin/bash
+
+LOG_PATH=$(cat dist/.cyphernodeconf/installer/config.sh | grep LOGS_DATAPATH | cut -c 15-)
+PROXY_LOGS=$LOG_PATH/proxy.log
+tail -f $PROXY_LOGS
+exit 0;
+'''
+description = "tail proxy logs"
+tags = ['proxy']
+
+[scripts.genesis]
+alias='gen'
+command='''
+#!/bin/bash
+
+BITCOIN_PATH=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_DATAPATH | cut -c 18-)
+BITCOIN_NETWORK=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_NETWORK | cut -c 17-)
+echo $BITCOIN_NETWORK
+if [[ BITCOIN_NETWORK -eq 'testnet' ]]
+then
+    hexdump -C -s 8 -n 285 $BITCOIN_PATH/testnet3/blocks/blk00000.dat
+else
+    hexdump -C -s 8 -n 285 -f $BITCOIN_PATH/blocks/blk00000.dat
+fi
+exit 0;
+'''
+description = "hexdump genesis block"
+tags = ['bitcoin']
+
+
+[scripts.bitcoin-logs]
+alias='btclogs'
+command='''
+#!/bin/bash
+
+BITCOIN_PATH=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_DATAPATH | cut -c 18-)
+BITCOIN_NETWORK=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_NETWORK | cut -c 17-)
+
+if [[ BITCOIN_NETWORK == 'testnet' ]]
+then
+    tail -f $BITCOIN_PATH/testnet3/debug.log
+else
+    tail -f $BITCOIN_PATH/debug.log
+fi
+exit 0;
+'''
+description = "bitcoind logs"
+tags = ['bitcoin']
+
+
+[scripts.setup]
+alias='setup'
+command='''
+#!/bin/bash
+
+./dist/setup.sh
+exit 0;
+'''
+description = "setup cyphernode"
+tags = ['cn']
+
+
+[scripts.setup-irc]
+alias='setirc'
+command='''
+#!/bin/bash
+
+./dist/setup.sh -irc
+exit 0;
+'''
+description = "start cyphernode"
+tags = ['cn']
+
+
+[scripts.start]
+alias='start'
+command='cd dist && ./start.sh && cd -'
+description = "start cyphernode"
+tags = ['cn']
+
+
+[scripts.stop]
+alias='stop'
+command='cd dist && ./stop.sh && cd -'
+description = "stop cyphernode"
+tags = ['cn']
+
+
+[scripts.test]
+alias='test'
+command='''
+#!/bin/bash
+
+./dist/testdeployment.sh
+exit 0;
+'''
+description = "test cyphernode"
+tags = ['cn']
