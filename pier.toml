@@ -19,7 +19,7 @@ echo "You are about to run this script:\n"
 printf "***********************************************************************\n"
 cat build.sh
 printf "***********************************************************************\n"
-echo "You are about to run this script. Okay? (y/N)" 
+echo "You are about to run this script. Okay?" 
 printf "***********************************************************************\n"
 read -r REPLY
 if [[ ! $REPLY =~ ^[Yy]$ ]]
@@ -35,7 +35,7 @@ tags = ['cn']
 
 
 [scripts.proxy-logs]
-alias='proxylogs'
+alias='pxlogs'
 command='''
 #!/bin/bash
 
@@ -44,7 +44,7 @@ PROXY_LOGS=$LOG_PATH/proxy.log
 tail -f $PROXY_LOGS
 exit 0;
 '''
-description = "tails proxy logs"
+description = "tail proxy logs"
 tags = ['proxy']
 
 [scripts.genesis]
@@ -92,19 +92,22 @@ alias='setup'
 command='''
 #!/bin/bash
 
-./dist/setup.sh
+cd dist
+script -c setup.sh
+cd -
 exit 0;
 '''
 description = "setup cyphernode"
 tags = ['cn']
 
 
-[scripts.setup-irc]
+[scripts.setirc]
 alias='setirc'
 command='''
 #!/bin/bash
 
-./dist/setup.sh -irc
+cd dist
+script -c "./setup.sh -irc"
 exit 0;
 '''
 description = "start cyphernode"
@@ -113,14 +116,14 @@ tags = ['cn']
 
 [scripts.start]
 alias='start'
-command='cd dist && ./start.sh && cd -'
+command='cd dist && script -c ./start.sh -f /dev/null ; cd -'
 description = "start cyphernode"
 tags = ['cn']
 
 
 [scripts.stop]
 alias='stop'
-command='cd dist && ./stop.sh && cd -'
+command='cd dist && script -c ./stop.sh -f /dev/null ; cd -'
 description = "stop cyphernode"
 tags = ['cn']
 
