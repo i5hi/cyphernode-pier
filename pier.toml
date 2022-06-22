@@ -1,5 +1,5 @@
 [scripts.version]
-alias='v'
+alias='version'
 command='''
 #/bin/bash
 
@@ -9,8 +9,21 @@ exit 0;
 description = "print cyphernode version"
 tags = ['cn']
 
+[scripts.info]
+alias='info'
+command='''
+#/bin/bash
+
+cat dist/.cyphernodeconf/cyphernode/info.json | jq
+
+exit 0;
+'''
+description = "print cyphernode version"
+tags = ['cn']
+
+
 [scripts.build]
-alias='b'
+alias='build'
 command='''
 #/bin/bash
 
