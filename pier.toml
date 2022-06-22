@@ -19,7 +19,7 @@ echo "You are about to run this script:\n"
 printf "***********************************************************************\n"
 cat build.sh
 printf "***********************************************************************\n"
-echo "You are about to run this script. Okay?" 
+echo "You are about to run this script. Okay? (y/N)" 
 printf "***********************************************************************\n"
 read -r REPLY
 if [[ ! $REPLY =~ ^[Yy]$ ]]
@@ -35,7 +35,7 @@ tags = ['cn']
 
 
 [scripts.proxy-logs]
-alias='pxlogs'
+alias='proxylogs'
 command='''
 #!/bin/bash
 
@@ -44,7 +44,7 @@ PROXY_LOGS=$LOG_PATH/proxy.log
 tail -f $PROXY_LOGS
 exit 0;
 '''
-description = "tail proxy logs"
+description = "tails proxy logs"
 tags = ['proxy']
 
 [scripts.genesis]
