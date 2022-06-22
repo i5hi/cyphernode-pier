@@ -46,6 +46,9 @@ To run a command
 # Format: pier <command> <args>
 # check version
 pier version
+# log bitcoin daemon
+pier log bitcoin
+
 ```
 ## Adding your own pier commands
 
