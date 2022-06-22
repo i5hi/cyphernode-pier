@@ -46,34 +46,41 @@ BITCOIN_NETWORK=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_NE
 
 case $SERVICE in
     proxy)
+        tail -100 $LOG_PATH/$SERVICE.log
         tail -f $LOG_PATH/$SERVICE.log
         ;;
     bitcoin)
         if [[ BITCOIN_NETWORK -eq 'testnet' ]]
         then
+            tail -100 $BITCOIN_PATH/testnet3/debug.log
             tail -f $BITCOIN_PATH/testnet3/debug.log
         else
+            tail -100 $BITCOIN_PATH/debug.log
             tail -f $BITCOIN_PATH/debug.log
         fi
         ;;
     batcher)
         LOGS=$LOG_PATH/$SERVICE.log
-        tail -f $LOGS
+        tail -100 $LOGS/$SERVICE.log
+        tail -f $LOG_PATH/$SERVICE.log
         exit 0
         ;;
     gatekeeper)
         LOGS=$LOG_PATH/$SERVICE.log
-        tail -f $LOGS
+        tail -100 $LOGS/$SERVICE.log
+        tail -f $LOG_PATH/$SERVICE.log
         exit 0
         ;;
     notifier)
         LOGS=$LOG_PATH/$SERVICE.log
-        tail -f $LOGS
+        tail -100 $LOGS/$SERVICE.log
+        tail -f $LOG_PATH/$SERVICE.
         exit 0
         ;;
     otsclient)
         LOGS=$LOG_PATH/$SERVICE.log
-        tail -f $LOGS
+        tail -100 $LOGS/$SERVICE.log
+        tail -f $LOG_PATH/$SERVICE.log
         exit 0
         ;;
     *)
@@ -112,7 +119,7 @@ command='''
 #!/bin/bash
 
 cd dist
-script -c setup.sh -f /dev/null
+script -c ./setup.sh -f /dev/null
 cd -
 exit 0;
 '''
@@ -120,8 +127,8 @@ description = "setup cyphernode"
 tags = ['cn']
 
 
-[scripts.setirc]
-alias='setirc'
+[scripts.irc]
+alias='irc'
 command='''
 #!/bin/bash
 
@@ -129,7 +136,7 @@ cd dist
 script -c "./setup.sh -irc" -f /dev/null
 exit 0;
 '''
-description = "start cyphernode"
+description = "short hand for fast setup -irc"
 tags = ['cn']
 
 
