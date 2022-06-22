@@ -106,26 +106,6 @@ description = "hexdump genesis block"
 tags = ['bitcoin']
 
 
-[scripts.bitcoin-logs]
-alias='btclogs'
-command='''
-#!/bin/bash
-
-BITCOIN_PATH=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_DATAPATH | cut -c 18-)
-BITCOIN_NETWORK=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_NETWORK | cut -c 17-)
-
-if [[ BITCOIN_NETWORK == 'testnet' ]]
-then
-    tail -f $BITCOIN_PATH/testnet3/debug.log
-else
-    tail -f $BITCOIN_PATH/debug.log
-fi
-exit 0;
-'''
-description = "bitcoind logs"
-tags = ['bitcoin']
-
-
 [scripts.setup]
 alias='setup'
 command='''
