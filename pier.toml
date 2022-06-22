@@ -18,7 +18,7 @@ cat dist/.cyphernodeconf/cyphernode/info.json | jq
 
 exit 0;
 '''
-description = "print cyphernode version"
+description = "print cyphernode info"
 tags = ['cn']
 
 
@@ -43,7 +43,7 @@ else
 fi
 exit 0;
 '''
-description = "build All Docker Images"
+description = "build All docker images"
 tags = ['cn']
 
 
