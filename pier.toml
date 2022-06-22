@@ -34,18 +34,57 @@ description = "build All Docker Images"
 tags = ['cn']
 
 
-[scripts.proxy-logs]
-alias='pxlogs'
+[scripts.log]
+alias='log'
 command='''
 #!/bin/bash
 
+SERVICE=$1
 LOG_PATH=$(cat dist/.cyphernodeconf/installer/config.sh | grep LOGS_DATAPATH | cut -c 15-)
-PROXY_LOGS=$LOG_PATH/proxy.log
-tail -f $PROXY_LOGS
+BITCOIN_PATH=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_DATAPATH | cut -c 18-)
+BITCOIN_NETWORK=$(cat dist/.cyphernodeconf/installer/config.sh | grep BITCOIN_NETWORK | cut -c 17-)
+
+case $SERVICE in
+    proxy)
+        tail -f $LOG_PATH/$SERVICE.log
+        ;;
+    bitcoin)
+        if [[ BITCOIN_NETWORK -eq 'testnet' ]]
+        then
+            tail -f $BITCOIN_PATH/testnet3/debug.log
+        else
+            tail -f $BITCOIN_PATH/debug.log
+        fi
+        ;;
+    batcher)
+        LOGS=$LOG_PATH/$SERVICE.log
+        tail -f $LOGS
+        exit 0
+        ;;
+    gatekeeper)
+        LOGS=$LOG_PATH/$SERVICE.log
+        tail -f $LOGS
+        exit 0
+        ;;
+    notifier)
+        LOGS=$LOG_PATH/$SERVICE.log
+        tail -f $LOGS
+        exit 0
+        ;;
+    otsclient)
+        LOGS=$LOG_PATH/$SERVICE.log
+        tail -f $LOGS
+        exit 0
+        ;;
+    *)
+        echo "Not a valid service: Try: pier log proxy/gatekeeper/bitcoin/notifier/otsclient"
+        ;;
+esac
+
 exit 0;
 '''
-description = "tail proxy logs"
-tags = ['proxy']
+description = "log a cyphernode service"
+tags = ['proxy', 'bitcoin', 'gatekeeper', 'batcher', 'ots', 'notifier']
 
 [scripts.genesis]
 alias='gen'
