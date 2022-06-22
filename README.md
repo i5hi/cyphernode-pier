@@ -68,4 +68,9 @@ tags = ['cn']
 ```
 
 
+## NOTE
+
+These scripts are only tested on linux. 
+
+Do open issues if they do not work on MacOS.
 
