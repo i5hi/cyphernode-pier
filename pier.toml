@@ -43,7 +43,7 @@ else
 fi
 exit 0;
 '''
-description = "build All docker images"
+description = "build all docker images"
 tags = ['cn']
 
 
@@ -178,4 +178,16 @@ cd -
 exit 0;
 '''
 description = "test cyphernode"
+tags = ['cn']
+
+[scripts.stats]
+alias='stats'
+command='''
+#!/bin/bash
+
+RUNNING=$(docker network inspect cyphernodenet | grep Name | tail -n +2 | cut -d':' -f2 | tr -d ',"' | perl -pe 's/\n/ /g')
+docker stats $RUNNING
+exit 0;
+'''
+description = "get all running container stats"
 tags = ['cn']
